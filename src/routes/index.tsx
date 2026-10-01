@@ -54,17 +54,17 @@ function Start() {
     <>
       {/* Hero */}
       <section className="-mt-16 p-3">
-        <div className="panel-blue relative isolate overflow-hidden rounded-[2.25rem] pt-24 pb-8 sm:pt-28 lg:pb-10">
-          <div className="container-page max-w-[88rem]">
+        <div className="panel-blue relative isolate flex flex-col overflow-hidden rounded-[2.25rem] lg:min-h-[calc(100svh-1.5rem)] pt-24 pb-8 sm:pt-24 lg:pb-6">
+          <div className="container-page flex max-w-[88rem] flex-1 flex-col">
             {/* Jättestor ordbild */}
             <div
               aria-hidden="true"
-              className="mx-auto w-fit text-center font-display text-[min(27vw,23rem)] leading-[0.82] text-white select-none"
+              className="mx-auto w-fit text-center font-display text-[min(27vw,23rem,27svh)] leading-[0.82] text-white select-none"
             >
               zanea
             </div>
 
-            <div className="relative z-20 mt-8 grid gap-8 lg:mt-4 lg:grid-cols-[1fr_auto] lg:items-start">
+            <div className="relative z-20 mt-8 grid gap-8 lg:mt-auto lg:pt-8 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
                 <h1 className="max-w-lg text-[clamp(1.9rem,4.4vw,2.9rem)]">
                   Professionell lokalvård och hemstädning i <Mark>Stockholm &amp; Bromma</Mark>
