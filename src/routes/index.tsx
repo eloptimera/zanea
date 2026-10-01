@@ -42,12 +42,6 @@ const TRYGGHET = [
   { ikon: ThumbsUp, text: "Nöjd-kund-garanti" },
 ] as const;
 
-const VAL = [
-  { ikon: House, namn: "Hemstädning", hash: "hemstadning" },
-  { ikon: Building2, namn: "Företagsstädning", hash: "foretagsstadning" },
-  { ikon: Sparkles, namn: "Storstädning", hash: "flytt-storstadning" },
-] as const;
-
 const KORTSTIL = [
   "bg-brand text-white",
   "border-2 border-line bg-white text-ink",
@@ -60,24 +54,17 @@ function Start() {
     <>
       {/* Hero */}
       <section className="-mt-16 p-3">
-        <div className="panel-blue relative isolate overflow-hidden rounded-[2.25rem] pt-28 pb-8 sm:pt-32 lg:pb-12">
+        <div className="panel-blue relative isolate overflow-hidden rounded-[2.25rem] pt-24 pb-8 sm:pt-28 lg:pb-10">
           <div className="container-page max-w-[88rem]">
-            {/* Jättestor ordbild med bubblor i mitten */}
+            {/* Jättestor ordbild */}
             <div
               aria-hidden="true"
-              className="relative mx-auto flex w-fit items-end justify-center font-display text-[min(27vw,23rem)] leading-[0.82] text-white select-none"
+              className="mx-auto w-fit text-center font-display text-[min(27vw,23rem)] leading-[0.82] text-white select-none"
             >
-              <span>zan</span>
-              <span className="relative inline-block w-[0.82em] shrink-0 self-stretch">
-                <span className="absolute -top-[0.02em] left-1/2 -translate-x-1/2 text-[0.2em] leading-none whitespace-nowrap">
-                  städ.
-                </span>
-                <Bubblor className="absolute bottom-[-0.14em] left-1/2 z-10 w-[1.5em] max-w-none -translate-x-1/2" />
-              </span>
-              <span>ea</span>
+              zanea
             </div>
 
-            <div className="relative z-20 mt-10 grid gap-8 lg:mt-6 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div className="relative z-20 mt-8 grid gap-8 lg:mt-4 lg:grid-cols-[1fr_auto] lg:items-start">
               <div>
                 <h1 className="max-w-lg text-[clamp(1.9rem,4.4vw,2.9rem)]">
                   Professionell lokalvård och hemstädning i <Mark>Stockholm &amp; Bromma</Mark>
@@ -108,22 +95,6 @@ function Start() {
               </div>
 
               <div className="flex flex-col gap-3 lg:w-[22rem] lg:items-end">
-                <div className="glass flex items-center gap-3 rounded-full py-2 pr-2 pl-5 text-sm font-bold">
-                  <span>Välj tjänst</span>
-                  {VAL.map(({ ikon: Ikon, namn, hash }) => (
-                    <Link
-                      key={hash}
-                      to="/tjanster"
-                      hash={hash}
-                      aria-label={namn}
-                      title={namn}
-                      className="grid size-11 place-items-center rounded-full bg-white text-brand transition-transform duration-200 hover:-translate-y-0.5 hover:bg-sun hover:text-ink"
-                    >
-                      <Ikon className="size-5" aria-hidden="true" />
-                    </Link>
-                  ))}
-                </div>
-
                 <div className="w-full rounded-[1.75rem] bg-white p-5 text-ink shadow-2xl shadow-brand-deep/40">
                   <p className="font-display text-xl text-brand">Få fri offert</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
@@ -182,7 +153,7 @@ function Start() {
       </section>
 
       {/* RUT-kalkylator */}
-      <section id="rut" className="bg-tint py-20 sm:py-28">
+      <section id="rut" className="bg-fade-tint py-20 sm:py-28">
         <div className="container-page">
           <Reveal>
             <p className="eyebrow">RUT-kalkylator</p>
@@ -222,11 +193,11 @@ function Start() {
               <dt className="text-xs font-bold tracking-[0.14em] text-white/85 uppercase">
                 Verksamma sedan
               </dt>
-              <dd className="mt-3 font-display text-5xl">{FORETAG.startar}</dd>
+              <dd className="mt-3 font-display text-4xl sm:text-5xl">{FORETAG.startar}</dd>
             </div>
             <div className="rounded-[2rem] bg-ink p-6 text-white">
-              <dt className="text-xs font-bold tracking-[0.14em] text-sun uppercase">Anställda</dt>
-              <dd className="mt-3 font-display text-5xl">{FORETAG.anstallda}</dd>
+              <dt className="text-xs font-bold tracking-[0.14em] text-sun uppercase">Säte</dt>
+              <dd className="mt-3 font-display text-3xl sm:text-4xl">{FORETAG.ort}</dd>
             </div>
             <div className="col-span-2 rounded-[2rem] bg-tint p-6">
               <dt className="text-xs font-bold tracking-[0.14em] text-brand uppercase">

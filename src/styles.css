@@ -145,6 +145,17 @@
   color: #ffffff;
 }
 
+/* Ljusblå yta som tonas mjukt in och ut mot vitt – inga hårda kanter mellan sektioner. */
+@utility bg-fade-tint {
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    var(--tint) 18%,
+    var(--tint) 82%,
+    #ffffff 100%
+  );
+}
+
 @utility glass {
   background-color: rgb(255 255 255 / 0.16);
   border: 1px solid rgb(255 255 255 / 0.28);

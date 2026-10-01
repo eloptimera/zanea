@@ -46,7 +46,6 @@ const FAKTA = [
   { rubrik: "Företag", varde: FORETAG.namn },
   { rubrik: "Organisationsnummer", varde: FORETAG.orgnr },
   { rubrik: "Verksamma sedan", varde: String(FORETAG.startar) },
-  { rubrik: "Anställda", varde: FORETAG.anstallda },
   { rubrik: "Bransch", varde: "Lokalvård & städservice" },
   { rubrik: "Säte", varde: FORETAG.adress },
   { rubrik: "Arbetsområde", varde: FORETAG.omrade },
@@ -86,7 +85,7 @@ function OmOss() {
         ))}
       </section>
 
-      <section className="bg-tint py-20 sm:py-28">
+      <section className="bg-fade-tint py-20 sm:py-28">
         <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <p className="eyebrow">Teamet</p>

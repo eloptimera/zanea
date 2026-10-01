@@ -63,7 +63,7 @@ function Rut() {
         </Reveal>
       </section>
 
-      <section className="bg-tint py-20 sm:py-28">
+      <section className="bg-fade-tint py-20 sm:py-28">
         <div className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <Reveal>
             <p className="eyebrow">Vanliga frågor</p>

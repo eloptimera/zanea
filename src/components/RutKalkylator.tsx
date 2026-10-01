@@ -74,7 +74,7 @@ export function RutKalkylator() {
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+    <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
       <div className="rounded-[2rem] border-2 border-line bg-white p-6 sm:p-9">
         <fieldset>
           <legend className="text-sm font-bold text-ink">Typ av städning</legend>

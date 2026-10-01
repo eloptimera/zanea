@@ -8,7 +8,6 @@ export const FORETAG: {
   ort: string;
   omrade: string;
   startar: number;
-  anstallda: string;
   orgnr: string;
   gata: string;
   postnummer: string;
@@ -26,7 +25,6 @@ export const FORETAG: {
   ort: "Bromma",
   omrade: "Stockholm & Bromma",
   startar: 2024,
-  anstallda: "ca 4",
   orgnr: "559471-7901",
   gata: "Stenhammarsvägen 2A",
   postnummer: "168 58",
