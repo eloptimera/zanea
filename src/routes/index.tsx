@@ -1,23 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Heading, Marquee, Underline } from "@/components/Heading";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  Building2,
+  House,
+  ShieldCheck,
+  Sparkles,
+  ThumbsUp,
+} from "lucide-react";
+import { Bubblor, Sparkle } from "@/components/Brand";
+import { Heading, Mark } from "@/components/Heading";
 import { Reveal } from "@/components/Reveal";
+import { RutKalkylator } from "@/components/RutKalkylator";
 import { FORETAG } from "@/lib/foretag";
-import { ArrowUpRight } from "lucide-react";
-import hero from "@/assets/hero-goteborg.png";
+import { TJANSTER } from "@/lib/tjanster";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Målare i Torslanda & Göteborg – ReMAB AB" },
+      { title: "Städfirma i Bromma & Stockholm – Zanea AB" },
       {
         name: "description",
         content:
-          "Professionellt måleri i Torslanda, på Hisingen och i Göteborg sedan 2006. Invändigt och utvändigt måleri, spackling, slipning och tapetsering. Begär en gratis offert.",
+          "Professionell lokalvård och hemstädning i Stockholm & Bromma. RUT-avdrag direkt på fakturan, ansvarsförsäkring och nöjd-kund-garanti. Få fri offert.",
       },
-      { property: "og:title", content: "Målare i Torslanda & Göteborg – ReMAB AB" },
+      { property: "og:title", content: "Städfirma i Bromma & Stockholm – Zanea AB" },
       {
         property: "og:description",
-        content: "Erfarna målare med precision och personligt engagemang. Begär en gratis offert.",
+        content: "Hemstädning, flyttstädning, kontorsstädning och feststädning. Få fri offert.",
       },
       { property: "og:url", content: "/" },
     ],
@@ -26,188 +36,223 @@ export const Route = createFileRoute("/")({
   component: Start,
 });
 
-const TJANSTER = [
-  {
-    nr: "01",
-    titel: "Invändigt måleri",
-    text: "Målning av väggar, tak, kök och snickerier.",
-    stil: "bg-lime text-foreground",
-  },
-  {
-    nr: "02",
-    titel: "Spackling & slipning",
-    text: "Noggrant underarbete för jämna och hållbara resultat.",
-    stil: "bg-foreground text-background",
-  },
-  {
-    nr: "03",
-    titel: "Tapetsering",
-    text: "Professionell uppsättning av mönstrade och enfärgade tapeter.",
-    stil: "bg-foreground text-background",
-  },
-  {
-    nr: "04",
-    titel: "Utvändigt måleri",
-    text: "Fasadmålning av villor och fastigheter anpassat efter väder och material.",
-    stil: "bg-lime text-foreground",
-  },
+const TRYGGHET = [
+  { ikon: BadgeCheck, text: "RUT-avdrag direkt på fakturan" },
+  { ikon: ShieldCheck, text: "Ansvarsförsäkring" },
+  { ikon: ThumbsUp, text: "Nöjd-kund-garanti" },
 ] as const;
 
-const BANDTEXT = TJANSTER.map((t) => t.titel);
+const VAL = [
+  { ikon: House, namn: "Hemstädning", hash: "hemstadning" },
+  { ikon: Building2, namn: "Företagsstädning", hash: "foretagsstadning" },
+  { ikon: Sparkles, namn: "Storstädning", hash: "flytt-storstadning" },
+] as const;
+
+const KORTSTIL = [
+  "bg-brand text-white",
+  "border-2 border-line bg-white text-ink",
+  "bg-ink text-white",
+  "bg-tint text-ink",
+] as const;
 
 function Start() {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate -mt-16 flex min-h-svh items-center overflow-hidden pt-28 pb-40 sm:pb-44">
-        <img
-          src={hero}
-          alt=""
-          width={1000}
-          height={513}
-          fetchPriority="high"
-          className="absolute inset-0 -z-20 h-full w-full object-cover"
-        />
-        <div
-          className="absolute inset-0 -z-10 bg-linear-to-b from-black/60 via-black/45 to-black/75"
-          aria-hidden="true"
-        />
-        <div className="container-page text-white">
-          <div className="flex flex-wrap gap-3" aria-hidden="true">
-            <span className="-rotate-3 rounded-full bg-lime px-5 py-2 text-sm font-bold text-foreground">
-              Sedan {FORETAG.aktivtSedan}
-            </span>
-            <span className="rotate-2 rounded-full bg-white px-5 py-2 text-sm font-bold text-foreground">
-              Torslanda · Hisingen · Göteborg
-            </span>
-          </div>
-          <h1 className="mt-8 max-w-4xl text-[clamp(2.75rem,8vw,6.5rem)] leading-[1]">
-            Professionellt <Underline>måleri</Underline> i{"\u00a0"}
-            {FORETAG.ort} &amp;{"\u00a0"}Göteborg
-          </h1>
-          <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/90">
-            Vi är ett passionerat team av erfarna målare som sätter dina unika visioner i fokus.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link to="/offert" className="btn-base btn-lime">
-              Begär en gratis offert
-            </Link>
-            <a
-              href={`tel:${FORETAG.telefonLank}`}
-              className="btn-base border-2 border-white text-white hover:border-lime hover:bg-lime hover:text-foreground"
+      <section className="-mt-16 p-3">
+        <div className="panel-blue relative isolate overflow-hidden rounded-[2.25rem] pt-28 pb-8 sm:pt-32 lg:pb-12">
+          <div className="container-page max-w-[88rem]">
+            {/* Jättestor ordbild med bubblor i mitten */}
+            <div
+              aria-hidden="true"
+              className="relative mx-auto flex w-fit items-end justify-center font-display text-[min(27vw,23rem)] leading-[0.82] text-white select-none"
             >
-              Ring {FORETAG.telefon}
-            </a>
+              <span>zan</span>
+              <span className="relative inline-block w-[0.82em] shrink-0 self-stretch">
+                <span className="absolute -top-[0.02em] left-1/2 -translate-x-1/2 text-[0.2em] leading-none whitespace-nowrap">
+                  städ.
+                </span>
+                <Bubblor className="absolute bottom-[-0.14em] left-1/2 z-10 w-[1.5em] max-w-none -translate-x-1/2" />
+              </span>
+              <span>ea</span>
+            </div>
+
+            <div className="relative z-20 mt-10 grid gap-8 lg:mt-6 lg:grid-cols-[1fr_auto] lg:items-end">
+              <div>
+                <h1 className="max-w-lg text-[clamp(1.9rem,4.4vw,2.9rem)]">
+                  Professionell lokalvård och hemstädning i <Mark>Stockholm &amp; Bromma</Mark>
+                </h1>
+                <p className="mt-4 max-w-md leading-relaxed text-white/90">
+                  Vi städar hem, kontor och lokaler så att du kan lägga tiden på annat. Skicka en
+                  förfrågan så återkommer vi med fri offert.
+                </p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Link to="/offert" className="btn-base btn-white">
+                    Få fri offert
+                  </Link>
+                  <Link to="/rut" className="btn-base btn-outline-white">
+                    Boka städning
+                  </Link>
+                </div>
+                <ul className="mt-7 flex flex-wrap gap-2">
+                  {TRYGGHET.map(({ ikon: Ikon, text }) => (
+                    <li
+                      key={text}
+                      className="glass flex items-center gap-2 rounded-full py-2 pr-4 pl-3 text-sm font-bold"
+                    >
+                      <Ikon className="size-4 text-sun" aria-hidden="true" />
+                      {text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex flex-col gap-3 lg:w-[22rem] lg:items-end">
+                <div className="glass flex items-center gap-3 rounded-full py-2 pr-2 pl-5 text-sm font-bold">
+                  <span>Välj tjänst</span>
+                  {VAL.map(({ ikon: Ikon, namn, hash }) => (
+                    <Link
+                      key={hash}
+                      to="/tjanster"
+                      hash={hash}
+                      aria-label={namn}
+                      title={namn}
+                      className="grid size-11 place-items-center rounded-full bg-white text-brand transition-transform duration-200 hover:-translate-y-0.5 hover:bg-sun hover:text-ink"
+                    >
+                      <Ikon className="size-5" aria-hidden="true" />
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="w-full rounded-[1.75rem] bg-white p-5 text-ink shadow-2xl shadow-brand-deep/40">
+                  <p className="font-display text-xl text-brand">Få fri offert</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                    Berätta vad du behöver hjälp med så återkommer vi med ett förslag och pris.
+                  </p>
+                  <Link
+                    to="/offert"
+                    className="btn-base btn-blue mt-4 w-full justify-between py-2 pr-2 pl-5"
+                  >
+                    Begär offert
+                    <span className="grid size-9 place-items-center rounded-full bg-white text-brand">
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
+          <Sparkle className="pointer-events-none absolute top-24 left-[8%] -z-10 hidden size-5 text-white/70 lg:block" />
         </div>
-        <Marquee items={BANDTEXT} />
       </section>
 
-      {/* Om företaget */}
-      <section className="container-page grid gap-10 py-20 sm:py-28 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+      {/* Tjänster */}
+      <section id="tjanster" className="container-page py-20 sm:py-28">
         <Reveal>
-          <p className="eyebrow">ReMAB AB</p>
+          <p className="eyebrow">Tjänster</p>
           <Heading className="mt-4 max-w-2xl text-4xl sm:text-5xl">
-            Varje projekt är en <Underline>prioritet</Underline>
+            Städning för hem, kontor och <Mark>bygge</Mark>
           </Heading>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Sedan {FORETAG.aktivtSedan} har ReMAB AB levererat högkvalitativa måleriarbeten med stor
-            precision och ett personligt engagemang i Torslanda och Göteborgsområdet. För oss är
-            varje projekt en prioritet, varje detalj viktig och varje kund värd det allra bästa.
-          </p>
-          <Link
-            to="/om-oss"
-            className="mt-8 inline-flex items-center gap-2 font-bold underline decoration-lime decoration-[0.18em] underline-offset-[0.4em] hover:decoration-foreground"
-          >
-            Läs mer om oss
-            <ArrowUpRight size={18} strokeWidth={2.2} aria-hidden="true" />
-          </Link>
         </Reveal>
 
+        <div className="mt-12 grid gap-4 md:grid-cols-2">
+          {TJANSTER.map((t, i) => (
+            <Reveal key={t.id} delay={i * 70}>
+              <Link
+                to="/tjanster"
+                hash={t.id}
+                className={`group flex h-full min-h-[17rem] flex-col justify-between rounded-[2rem] p-7 transition-transform duration-300 hover:-translate-y-1 sm:p-9 ${KORTSTIL[i]}`}
+              >
+                <div className="flex items-start justify-between">
+                  <span className="grid size-14 place-items-center rounded-full bg-white/20 ring-1 ring-current/15">
+                    <t.ikon className="size-6" aria-hidden="true" />
+                  </span>
+                  <span className="grid size-11 place-items-center rounded-full bg-white text-brand transition-colors group-hover:bg-sun group-hover:text-ink">
+                    <ArrowUpRight className="size-5" aria-hidden="true" />
+                  </span>
+                </div>
+                <div className="mt-10">
+                  <h3 className="text-3xl sm:text-4xl">{t.titel}</h3>
+                  <p className="mt-3 max-w-sm leading-relaxed opacity-90">{t.kort}</p>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* RUT-kalkylator */}
+      <section id="rut" className="bg-tint py-20 sm:py-28">
+        <div className="container-page">
+          <Reveal>
+            <p className="eyebrow">RUT-kalkylator</p>
+            <Heading className="mt-4 max-w-2xl text-4xl sm:text-5xl">
+              Se vad städningen kostar <Mark>efter RUT</Mark>
+            </Heading>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+              Ange yta och hur ofta du vill ha städning så får du direkt en uppskattad prislapp
+              efter RUT-avdraget.
+            </p>
+          </Reveal>
+          <Reveal delay={100} className="mt-10">
+            <RutKalkylator />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Om oss */}
+      <section className="container-page grid gap-12 py-20 sm:py-28 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-16">
+        <Reveal>
+          <p className="eyebrow">Om Zanea</p>
+          <Heading className="mt-4 max-w-2xl text-4xl sm:text-5xl">
+            Ett lokalt städteam i <Mark>Bromma</Mark>
+          </Heading>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            {FORETAG.namn} är ett städ- och lokalvårdsbolag med säte i {FORETAG.ort}. Vi arbetar i
+            Stockholm och Bromma och tar hand om allt från regelbunden hemstädning till
+            företagslokaler och byggstädning.
+          </p>
+          <Link to="/om-oss" className="btn-base btn-outline mt-8">
+            Läs mer om oss
+          </Link>
+        </Reveal>
         <Reveal delay={120}>
           <dl className="grid grid-cols-2 gap-4">
-            <div className="rounded-3xl bg-foreground p-6 text-background">
-              <dt className="text-xs font-bold tracking-[0.14em] text-lime uppercase">
-                Aktiva sedan
+            <div className="rounded-[2rem] bg-brand p-6 text-white">
+              <dt className="text-xs font-bold tracking-[0.14em] text-white/85 uppercase">
+                Verksamma sedan
               </dt>
-              <dd className="mt-3 font-display text-5xl">{FORETAG.aktivtSedan}</dd>
+              <dd className="mt-3 font-display text-5xl">{FORETAG.startar}</dd>
             </div>
-            <div className="rounded-3xl bg-lime p-6">
-              <dt className="text-xs font-bold tracking-[0.14em] uppercase">Arbetsområde</dt>
-              <dd className="mt-3 font-display text-2xl leading-tight sm:text-3xl">
-                {FORETAG.omrade}
-              </dd>
+            <div className="rounded-[2rem] bg-ink p-6 text-white">
+              <dt className="text-xs font-bold tracking-[0.14em] text-sun uppercase">Anställda</dt>
+              <dd className="mt-3 font-display text-5xl">{FORETAG.anstallda}</dd>
+            </div>
+            <div className="col-span-2 rounded-[2rem] bg-tint p-6">
+              <dt className="text-xs font-bold tracking-[0.14em] text-brand uppercase">
+                Arbetsområde
+              </dt>
+              <dd className="mt-3 font-display text-3xl text-ink">{FORETAG.omrade}</dd>
             </div>
           </dl>
         </Reveal>
       </section>
 
-      {/* Tjänster */}
-      <section className="bg-fade-tint py-20 sm:py-28">
-        <div className="container-page">
-          <Reveal>
-            <p className="eyebrow">Tjänster</p>
-            <Heading className="mt-4 max-w-2xl text-4xl sm:text-5xl">
-              Målning för hus, lägenheter och <Underline>fastigheter</Underline>
-            </Heading>
-          </Reveal>
-
-          <div className="mt-12 grid gap-4 md:grid-cols-2">
-            {TJANSTER.map((t, i) => (
-              <Reveal key={t.titel} delay={i * 80}>
-                <article
-                  className={`flex h-full min-h-[15rem] flex-col justify-between rounded-3xl p-8 sm:p-10 ${t.stil}`}
-                >
-                  <span className="text-sm font-bold tracking-[0.14em]">{t.nr}</span>
-                  <div className="mt-12">
-                    <h3 className="text-3xl sm:text-4xl">{t.titel}</h3>
-                    <p className="mt-4 max-w-sm leading-relaxed opacity-85">{t.text}</p>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ROT */}
-      <section className="container-page py-20 sm:py-28">
-        <Reveal>
-          <div className="grid gap-8 rounded-3xl border-2 border-foreground p-8 sm:p-12 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <p className="eyebrow">Privatkunder</p>
-              <Heading className="mt-4 max-w-xl text-3xl sm:text-4xl">
-                ROT-avdrag direkt på <Underline>fakturan</Underline>
-              </Heading>
-              <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
-                ReMAB AB har F-skatt, vilket krävs för att du ska kunna använda ROT-avdraget direkt
-                på fakturan för måleriarbeten i ditt hem.
-              </p>
-            </div>
-            <Link to="/rot" className="btn-base btn-primary">
-              Räkna på ditt ROT-avdrag
-            </Link>
-          </div>
-        </Reveal>
-      </section>
-
       {/* Avslutande CTA */}
-      <section className="container-page pb-4">
+      <section className="p-3 pt-0">
         <Reveal>
-          <div className="rounded-3xl bg-foreground px-8 py-16 text-background sm:px-16 sm:py-20">
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">
-              Berätta om ditt projekt – vi ger dig en <Underline>gratis offert</Underline>
+          <div className="panel-blue relative isolate overflow-hidden rounded-[2.25rem] px-6 py-16 sm:px-14 sm:py-24">
+            <Bubblor className="pointer-events-none absolute -right-8 -bottom-10 -z-10 hidden w-72 sm:block lg:right-16 lg:w-96" />
+            <h2 className="max-w-2xl text-[clamp(2.2rem,5vw,4rem)]">
+              Redo för ett <Mark>skinande rent</Mark> hem eller kontor?
             </h2>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/offert" className="btn-base btn-lime">
-                Begär en gratis offert
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link to="/offert" className="btn-base btn-white">
+                Få fri offert
               </Link>
-              <a
-                href={`tel:${FORETAG.telefonLank}`}
-                className="btn-base border-2 border-background/60 text-background hover:border-lime hover:bg-lime hover:text-foreground"
-              >
-                Ring {FORETAG.telefon}
-              </a>
+              <Link to="/kontakt" className="btn-base btn-outline-white">
+                Kontakta oss
+              </Link>
             </div>
           </div>
         </Reveal>

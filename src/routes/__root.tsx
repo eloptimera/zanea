@@ -18,16 +18,13 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl text-foreground">404</h1>
+        <h1 className="text-8xl text-brand">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Sidan finns inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Sidan du letar efter finns inte eller har flyttats.
         </p>
         <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
+          <Link to="/" className="btn-base btn-blue">
             Till startsidan
           </Link>
         </div>
@@ -58,14 +55,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="btn-base btn-blue"
           >
             Försök igen
           </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
+          <a href="/" className="btn-base btn-outline">
             Till startsidan
           </a>
         </div>
@@ -79,13 +73,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ReMAB AB – Målare i Torslanda & Göteborg" },
+      { title: "Zanea AB – Städfirma i Bromma & Stockholm" },
       {
         name: "description",
         content:
-          "Professionellt måleri i Torslanda, på Hisingen och i Göteborg sedan 2006. Invändigt och utvändigt måleri, spackling, slipning och tapetsering. Begär en gratis offert.",
+          "Professionell lokalvård och hemstädning i Stockholm & Bromma. RUT-avdrag direkt på fakturan, ansvarsförsäkring och nöjd-kund-garanti. Få fri offert.",
       },
-      { property: "og:site_name", content: "ReMAB AB" },
+      { property: "og:site_name", content: "Zanea AB" },
+      { name: "theme-color", content: "#1d5ed8" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "sv_SE" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -95,32 +90,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico?v=4", sizes: "any" },
-      { rel: "icon", href: "/favicon-32.png?v=4", type: "image/png", sizes: "32x32" },
-      { rel: "icon", href: "/icon-192.png?v=4", type: "image/png", sizes: "192x192" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=4" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          name: "ReMAB AB",
-          alternateName: "Renée måleri AB",
+          "@type": "HomeAndConstructionBusiness",
+          additionalType: "https://schema.org/CleaningService",
+          name: "Zanea AB",
           description:
-            "Målerifirma i Torslanda. Invändigt och utvändigt måleri, spackling, slipning och tapetsering i Torslanda, på Hisingen och i Göteborg.",
-          telephone: "+46705554472",
-          email: "info@remab.eu",
-          foundingDate: "2006",
+            "Städ- och lokalvårdsbolag i Bromma. Hemstädning, flytt- och storstädning, företagsstädning samt bygg- och feststädning i Stockholm och Bromma.",
+          foundingDate: "2024",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Långholmen 17",
-            postalCode: "423 38",
-            addressLocality: "Torslanda",
+            streetAddress: "Stenhammarsvägen 2A",
+            postalCode: "168 58",
+            addressLocality: "Bromma",
             addressCountry: "SE",
           },
-          areaServed: ["Torslanda", "Hisingen", "Göteborg"],
+          areaServed: ["Stockholm", "Bromma"],
         }),
       },
     ],
@@ -137,7 +129,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-white">
         {children}
         <Scripts />
       </body>
@@ -152,7 +144,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
         <Header />
-        <main className="flex-1 overflow-x-clip">
+        <main id="innehall" className="flex-1 overflow-x-clip">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>

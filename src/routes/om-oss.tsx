@@ -1,23 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Heading, Underline } from "@/components/Heading";
+import { Heart, ShieldCheck, Sparkles } from "lucide-react";
+import { Heading, Mark, PageHero } from "@/components/Heading";
 import { Reveal } from "@/components/Reveal";
 import { FORETAG } from "@/lib/foretag";
-import logo from "@/assets/remab-logo.png";
 
 export const Route = createFileRoute("/om-oss")({
   head: () => ({
     meta: [
-      { title: "Om oss – ReMAB AB, måleri i Torslanda" },
+      { title: "Om oss – Zanea AB, städfirma i Bromma" },
       {
         name: "description",
         content:
-          "ReMAB AB är ett målerifirma i Torslanda med erfarna målare. Aktiva sedan 2006 i Torslanda, på Hisingen och i Göteborg.",
+          "Zanea AB är ett städ- och lokalvårdsbolag i Bromma som arbetar i Stockholm och Bromma. Möt teamet och läs om hur vi arbetar.",
       },
-      { property: "og:title", content: "Om oss – ReMAB AB" },
-      {
-        property: "og:description",
-        content: "Erfarna målare i Torslanda med precision och personligt engagemang.",
-      },
+      { property: "og:title", content: "Om oss – Zanea AB" },
       { property: "og:url", content: "/om-oss" },
     ],
     links: [{ rel: "canonical", href: "/om-oss" }],
@@ -27,79 +23,97 @@ export const Route = createFileRoute("/om-oss")({
 
 const VARDERINGAR = [
   {
-    titel: "Dina visioner i fokus",
-    text: "Vi lyssnar först. Din bild av resultatet är utgångspunkten för hela arbetet.",
-    stil: "bg-lime text-foreground",
+    ikon: Heart,
+    titel: "Trygghet",
+    text: "Du ska känna dig trygg med den som städar hos dig. Därför har vi ansvarsförsäkring och RUT-avdrag direkt på fakturan.",
+    stil: "bg-brand text-white",
   },
   {
-    titel: "Varje detalj är viktig",
-    text: "Precision i både underarbete och slutresultat, från första spackelstrykningen.",
-    stil: "bg-foreground text-background",
+    ikon: Sparkles,
+    titel: "Noggrannhet",
+    text: "Vi städar efter dina önskemål och tar oss tid för detaljerna, från hemmet till kontoret.",
+    stil: "bg-ink text-white",
   },
   {
-    titel: "Varje kund värd det bästa",
-    text: "Ett personligt engagemang i varje projekt, stort som smått.",
-    stil: "border-2 border-foreground",
+    ikon: ShieldCheck,
+    titel: "Nöjd-kund-garanti",
+    text: "Är du inte nöjd ska du säga till. Vi vill att varje uppdrag ska kännas värt det.",
+    stil: "bg-tint text-ink",
   },
 ] as const;
 
 const FAKTA = [
-  { rubrik: "Företag", varde: `${FORETAG.namn} (${FORETAG.undertitel})` },
+  { rubrik: "Företag", varde: FORETAG.namn },
   { rubrik: "Organisationsnummer", varde: FORETAG.orgnr },
-  { rubrik: "Aktiva sedan", varde: String(FORETAG.aktivtSedan) },
-  { rubrik: "VD", varde: FORETAG.vd },
-  { rubrik: "Skatt", varde: "Registrerad för F-skatt, moms och arbetsgivaravgift" },
+  { rubrik: "Verksamma sedan", varde: String(FORETAG.startar) },
+  { rubrik: "Anställda", varde: FORETAG.anstallda },
+  { rubrik: "Bransch", varde: "Lokalvård & städservice" },
+  { rubrik: "Säte", varde: FORETAG.adress },
   { rubrik: "Arbetsområde", varde: FORETAG.omrade },
 ] as const;
+
+const initialer = (namn: string) =>
+  namn
+    .split(" ")
+    .filter((_, i, a) => i === 0 || i === a.length - 1)
+    .map((d) => d[0])
+    .join("");
 
 function OmOss() {
   return (
     <>
-      <section className="container-page pt-16 pb-16 sm:pt-24">
-        <Reveal>
-          <p className="eyebrow">Om oss</p>
-          <Heading as="h1" className="mt-6 max-w-3xl text-5xl sm:text-6xl">
-            Erfarna målare som sätter dina <Underline>visioner</Underline> i fokus
-          </Heading>
-          <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Vi är ett passionerat team av erfarna målare. Sedan {FORETAG.aktivtSedan} har{" "}
-            {FORETAG.namn} levererat högkvalitativa måleriarbeten med stor precision och ett
-            personligt engagemang i Torslanda och Göteborgsområdet.
-          </p>
-        </Reveal>
-      </section>
+      <PageHero
+        eyebrow="Om oss"
+        title={
+          <>
+            Ett lokalt städteam i <Mark>Bromma</Mark>
+          </>
+        }
+        intro={`${FORETAG.namn} är ett städ- och lokalvårdsbolag med säte i ${FORETAG.ort}. Vi hjälper privatpersoner och företag i ${FORETAG.omrade}.`}
+      />
 
-      <section className="container-page grid gap-6 pb-20 md:grid-cols-3">
+      <section className="container-page grid gap-4 py-20 md:grid-cols-3 sm:py-28">
         {VARDERINGAR.map((v, i) => (
-          <Reveal key={v.titel} delay={i * 100}>
-            <article className={`h-full rounded-3xl p-8 ${v.stil}`}>
-              <h2 className="text-2xl sm:text-3xl">{v.titel}</h2>
-              <p className="mt-4 leading-relaxed opacity-85">{v.text}</p>
+          <Reveal key={v.titel} delay={i * 90}>
+            <article className={`h-full rounded-[2rem] p-8 ${v.stil}`}>
+              <span className="grid size-14 place-items-center rounded-full bg-white/20">
+                <v.ikon className="size-6" aria-hidden="true" />
+              </span>
+              <h2 className="mt-8 text-3xl">{v.titel}</h2>
+              <p className="mt-3 leading-relaxed opacity-90">{v.text}</p>
             </article>
           </Reveal>
         ))}
       </section>
 
-      <section className="bg-fade-tint py-20">
-        <div className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-20">
+      <section className="bg-tint py-20 sm:py-28">
+        <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <div className="rounded-3xl bg-white p-8">
-              <img
-                src={logo}
-                alt={`${FORETAG.namn} – ${FORETAG.undertitel}`}
-                width={766}
-                height={261}
-                loading="lazy"
-                className="h-auto w-full"
-              />
-            </div>
+            <p className="eyebrow">Teamet</p>
+            <Heading className="mt-4 text-4xl sm:text-5xl">Människorna bakom Zanea</Heading>
+            <ul className="mt-8 space-y-3">
+              {FORETAG.personer.map((p) => (
+                <li key={p} className="flex items-center gap-4 rounded-3xl bg-white p-4">
+                  <span
+                    aria-hidden="true"
+                    className="grid size-14 shrink-0 place-items-center rounded-full bg-brand font-display text-xl text-white"
+                  >
+                    {initialer(p)}
+                  </span>
+                  <span>
+                    <span className="block font-bold text-ink">{p}</span>
+                    <span className="text-sm text-muted-foreground">{FORETAG.namn}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
-          <Reveal delay={120}>
+          <Reveal delay={100}>
             <p className="eyebrow">Fakta om företaget</p>
-            <dl className="mt-6 divide-y-2 divide-foreground/10">
+            <dl className="mt-6 divide-y-2 divide-line rounded-[2rem] bg-white px-6 py-2 sm:px-8">
               {FAKTA.map((f) => (
                 <div key={f.rubrik} className="grid gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
-                  <dt className="text-sm font-bold">{f.rubrik}</dt>
+                  <dt className="text-sm font-bold text-ink">{f.rubrik}</dt>
                   <dd className="text-muted-foreground">{f.varde}</dd>
                 </div>
               ))}
@@ -109,9 +123,12 @@ function OmOss() {
       </section>
 
       <section className="container-page py-20 sm:py-28">
-        <Reveal className="flex justify-center">
-          <Link to="/offert" className="btn-base btn-lime px-10 py-5 text-lg">
-            Begär en gratis offert
+        <Reveal className="flex flex-wrap justify-center gap-3">
+          <Link to="/offert" className="btn-base btn-blue px-9 py-4 text-base">
+            Få fri offert
+          </Link>
+          <Link to="/kontakt" className="btn-base btn-outline px-9 py-4 text-base">
+            Kontakta oss
           </Link>
         </Reveal>
       </section>

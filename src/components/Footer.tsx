@@ -1,77 +1,106 @@
 import { Link } from "@tanstack/react-router";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { Logo } from "@/components/Brand";
 import { FORETAG } from "@/lib/foretag";
+import { TJANSTER } from "@/lib/tjanster";
 
-const FOOTER_LANK =
-  "underline decoration-transparent decoration-[0.2em] underline-offset-[0.4em] transition-colors duration-200 hover:decoration-lime";
+const LANK =
+  "rounded-sm underline decoration-transparent decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-sun";
 
 export function Footer() {
   return (
-    <footer className="mt-24 bg-foreground text-background">
-      <div className="container-page grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-3">
-        <div>
-          <p className="font-display text-3xl">{FORETAG.kortnamn}</p>
-          <p className="mt-1 text-sm font-bold text-lime">{FORETAG.undertitel}</p>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-background/75">
-            Måleri i {FORETAG.ort}, Hisingen och Göteborg. Aktiva sedan {FORETAG.aktivtSedan}.
-          </p>
+    <footer className="p-3 pt-0">
+      <div className="overflow-hidden rounded-[2.25rem] bg-ink text-white">
+        <div className="container-page grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+          <div>
+            <Logo ljus className="text-4xl" />
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/75">
+              Lokalvård och hemstädning i {FORETAG.omrade}. RUT-avdrag direkt på fakturan.
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold tracking-[0.14em] text-sun uppercase">Tjänster</p>
+            <ul className="mt-4 space-y-2.5 text-sm text-white/85">
+              {TJANSTER.map((t) => (
+                <li key={t.id}>
+                  <Link to="/tjanster" hash={t.id} className={LANK}>
+                    {t.titel}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold tracking-[0.14em] text-sun uppercase">Sidor</p>
+            <ul className="mt-4 space-y-2.5 text-sm text-white/85">
+              <li>
+                <Link to="/rut" className={LANK}>
+                  RUT-avdrag
+                </Link>
+              </li>
+              <li>
+                <Link to="/om-oss" className={LANK}>
+                  Om oss
+                </Link>
+              </li>
+              <li>
+                <Link to="/offert" className={LANK}>
+                  Få fri offert
+                </Link>
+              </li>
+              <li>
+                <Link to="/kontakt" className={LANK}>
+                  Kontakt
+                </Link>
+              </li>
+              <li>
+                <Link to="/integritetspolicy" className={LANK}>
+                  Integritetspolicy
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold tracking-[0.14em] text-sun uppercase">Kontakt</p>
+            <ul className="mt-4 space-y-3 text-sm text-white/85">
+              {FORETAG.telefon && (
+                <li className="flex gap-3">
+                  <Phone className="mt-0.5 size-4 shrink-0 text-sun" aria-hidden="true" />
+                  <a href={`tel:${FORETAG.telefonLank}`} className={LANK}>
+                    {FORETAG.telefon}
+                  </a>
+                </li>
+              )}
+              {FORETAG.epost && (
+                <li className="flex gap-3">
+                  <Mail className="mt-0.5 size-4 shrink-0 text-sun" aria-hidden="true" />
+                  <a href={`mailto:${FORETAG.epost}`} className={LANK}>
+                    {FORETAG.epost}
+                  </a>
+                </li>
+              )}
+              <li className="flex gap-3">
+                <MapPin className="mt-0.5 size-4 shrink-0 text-sun" aria-hidden="true" />
+                <address className="not-italic">
+                  {FORETAG.gata}
+                  <br />
+                  {FORETAG.postnummer} {FORETAG.ort}
+                </address>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <p className="text-xs font-bold tracking-[0.14em] text-lime uppercase">Kontakt</p>
-          <ul className="mt-4 space-y-2 text-sm text-background/85">
-            <li>
-              <a href={`tel:${FORETAG.telefonLank}`} className={FOOTER_LANK}>
-                {FORETAG.telefon}
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${FORETAG.epost}`} className={FOOTER_LANK}>
-                {FORETAG.epost}
-              </a>
-            </li>
-            <li>{FORETAG.adress}</li>
-            <li>Org.nr {FORETAG.orgnr}</li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="text-xs font-bold tracking-[0.14em] text-lime uppercase">Sidor</p>
-          <ul className="mt-4 space-y-2 text-sm text-background/85">
-            <li>
-              <Link to="/om-oss" className={FOOTER_LANK}>
-                Om oss
-              </Link>
-            </li>
-            <li>
-              <Link to="/rot" className={FOOTER_LANK}>
-                ROT-avdrag
-              </Link>
-            </li>
-            <li>
-              <Link to="/offert" className={FOOTER_LANK}>
-                Begär offert
-              </Link>
-            </li>
-            <li>
-              <Link to="/kontakt" className={FOOTER_LANK}>
-                Kontakt
-              </Link>
-            </li>
-            <li>
-              <Link to="/integritetspolicy" className={FOOTER_LANK}>
-                Integritetspolicy
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-background/15">
-        <div className="container-page flex flex-wrap justify-between gap-2 py-6 text-xs text-background/70">
-          <span>
-            © {new Date().getFullYear()} {FORETAG.namn}
-          </span>
-          <span>Godkänd för F-skatt</span>
+        <div className="border-t border-white/15">
+          <div className="container-page flex flex-wrap justify-between gap-2 py-6 text-xs text-white/70">
+            <span>
+              © {new Date().getFullYear()} {FORETAG.namn} · Org.nr {FORETAG.orgnr}
+            </span>
+            <span>{FORETAG.omrade}</span>
+          </div>
         </div>
       </div>
     </footer>

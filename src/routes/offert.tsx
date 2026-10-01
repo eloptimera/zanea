@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Heading, Underline } from "@/components/Heading";
+import { PageHero, Mark } from "@/components/Heading";
 import { Reveal } from "@/components/Reveal";
 import { FORETAG } from "@/lib/foretag";
 import { skickaOffert } from "@/lib/formular";
@@ -8,16 +8,16 @@ import { skickaOffert } from "@/lib/formular";
 export const Route = createFileRoute("/offert")({
   head: () => ({
     meta: [
-      { title: "Begär gratis offert – ReMAB AB" },
+      { title: "Få fri offert – Zanea AB" },
       {
         name: "description",
         content:
-          "Beskriv ditt måleriprojekt i Torslanda, på Hisingen eller i Göteborg och begär en gratis offert från ReMAB AB.",
+          "Berätta vad du behöver hjälp med och få en fri offert på städning i Stockholm och Bromma från Zanea AB.",
       },
-      { property: "og:title", content: "Begär gratis offert – ReMAB AB" },
+      { property: "og:title", content: "Få fri offert – Zanea AB" },
       {
         property: "og:description",
-        content: "Berätta om ditt måleriprojekt och få en gratis offert.",
+        content: "Berätta vad du behöver hjälp med och få en fri offert.",
       },
       { property: "og:url", content: "/offert" },
     ],
@@ -27,10 +27,10 @@ export const Route = createFileRoute("/offert")({
 });
 
 const UPPDRAGSTYPER = [
-  "Invändigt måleri",
-  "Utvändigt måleri",
-  "Tapetsering",
-  "Spackling & slipning",
+  "Hemstädning",
+  "Flytt- & storstädning",
+  "Företags- & kontorsstädning",
+  "Bygg- & feststädning",
   "Annat",
 ];
 
@@ -70,7 +70,7 @@ function Offert() {
       );
       setKlart(true);
     } catch {
-      setFel("Något gick fel när förfrågan skulle skickas. Försök igen eller ring oss direkt.");
+      setFel("Något gick fel när förfrågan skulle skickas. Försök igen om en stund.");
     } finally {
       setSkickar(false);
     }
@@ -79,12 +79,15 @@ function Offert() {
   if (klart) {
     return (
       <section className="container-page py-28">
-        <div className="mx-auto max-w-xl rounded-3xl border border-line bg-card p-10 text-center">
+        <div
+          role="status"
+          className="mx-auto max-w-xl rounded-[2rem] border-2 border-line bg-white p-10 text-center"
+        >
           <p className="eyebrow">Tack!</p>
           <h1 className="mt-5 text-3xl">Din förfrågan är mottagen</h1>
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
-            Vi återkommer så snart vi kan. Är det brådskande går det bra att ringa {FORETAG.telefon}
-            .
+            Vi återkommer så snart vi kan.
+            {FORETAG.telefon && ` Är det brådskande går det bra att ringa ${FORETAG.telefon}.`}
           </p>
           <Link to="/" className="btn-base btn-outline mt-8">
             Tillbaka till startsidan
@@ -96,45 +99,43 @@ function Offert() {
 
   return (
     <>
-      <section className="container-page pt-16 pb-12 sm:pt-24">
-        <Reveal>
-          <p className="eyebrow">Offertförfrågan</p>
-          <Heading as="h1" className="mt-6 max-w-2xl text-5xl sm:text-6xl">
-            Berätta om ditt <Underline>projekt</Underline>
-          </Heading>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-            Ju mer du berättar, desto bättre underlag får vi till din offert. Offerten är gratis.
-          </p>
-        </Reveal>
-      </section>
+      <PageHero
+        eyebrow="Offertförfrågan"
+        title={
+          <>
+            Berätta vad du behöver <Mark>hjälp med</Mark>
+          </>
+        }
+        intro="Ju mer du berättar, desto bättre underlag får vi till din offert. Offerten är fri."
+      />
 
-      <section className="container-page pb-24">
+      <section className="container-page py-16 sm:py-24">
         <Reveal>
           <form
             onSubmit={onSubmit}
-            className="grid max-w-3xl gap-6 rounded-3xl border border-line bg-card p-8 sm:p-10"
+            className="grid max-w-3xl gap-6 rounded-[2rem] border-2 border-line bg-white p-8 sm:p-10"
           >
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
-                <label htmlFor="namn" className="text-sm font-medium">
+                <label htmlFor="namn" className="text-sm font-bold">
                   Namn
                 </label>
                 <input id="namn" name="namn" required className="field mt-2" />
               </div>
               <div>
-                <label htmlFor="telefon" className="text-sm font-medium">
+                <label htmlFor="telefon" className="text-sm font-bold">
                   Telefon
                 </label>
                 <input id="telefon" name="telefon" type="tel" required className="field mt-2" />
               </div>
               <div>
-                <label htmlFor="epost" className="text-sm font-medium">
+                <label htmlFor="epost" className="text-sm font-bold">
                   E-post
                 </label>
                 <input id="epost" name="epost" type="email" required className="field mt-2" />
               </div>
               <div>
-                <label htmlFor="adress" className="text-sm font-medium">
+                <label htmlFor="adress" className="text-sm font-bold">
                   Adress och ort
                 </label>
                 <input id="adress" name="adress" required className="field mt-2" />
@@ -142,15 +143,15 @@ function Offert() {
             </div>
 
             <fieldset>
-              <legend className="text-sm font-medium">Typ av uppdrag</legend>
+              <legend className="text-sm font-bold">Typ av uppdrag</legend>
               <div className="mt-3 flex flex-wrap gap-2">
                 {UPPDRAGSTYPER.map((t) => (
                   <label
                     key={t}
-                    className={`cursor-pointer rounded-full border-2 px-4 py-2 text-sm transition-colors duration-300 ${
+                    className={`flex min-h-11 cursor-pointer items-center rounded-full border-2 px-5 py-2 text-sm font-bold transition-colors duration-200 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-light ${
                       typer.includes(t)
-                        ? "border-foreground bg-foreground text-background"
-                        : "border-line hover:border-lime hover:bg-lime"
+                        ? "border-brand bg-brand text-white"
+                        : "border-line hover:border-brand"
                     }`}
                   >
                     <input
@@ -167,13 +168,13 @@ function Offert() {
 
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
-                <label htmlFor="yta_kvm" className="text-sm font-medium">
+                <label htmlFor="yta_kvm" className="text-sm font-bold">
                   Ungefärlig yta (kvm)
                 </label>
                 <input id="yta_kvm" name="yta_kvm" type="number" min={0} className="field mt-2" />
               </div>
               <div>
-                <label htmlFor="onskat_startdatum" className="text-sm font-medium">
+                <label htmlFor="onskat_startdatum" className="text-sm font-bold">
                   Önskat startdatum
                 </label>
                 <input
@@ -186,7 +187,7 @@ function Offert() {
             </div>
 
             <div>
-              <label htmlFor="meddelande" className="text-sm font-medium">
+              <label htmlFor="meddelande" className="text-sm font-bold">
                 Beskriv uppdraget
               </label>
               <textarea
@@ -194,12 +195,12 @@ function Offert() {
                 name="meddelande"
                 rows={5}
                 className="field mt-2"
-                placeholder="Antal rum, takhöjd, nuvarande skick, kulörönskemål …"
+                placeholder="Typ av bostad eller lokal, antal rum, önskad frekvens, särskilda önskemål …"
               />
             </div>
 
             <div>
-              <label htmlFor="bilder" className="text-sm font-medium">
+              <label htmlFor="bilder" className="text-sm font-bold">
                 Ladda upp bilder (valfritt)
               </label>
               <input
@@ -208,7 +209,7 @@ function Offert() {
                 accept="image/*"
                 multiple
                 onChange={(e) => setFiler(Array.from(e.target.files ?? []))}
-                className="field mt-2 file:mr-4 file:rounded-md file:border-0 file:bg-lime file:px-3 file:py-1.5 file:text-sm"
+                className="field mt-2 file:mr-4 file:rounded-full file:border-0 file:font-bold file:bg-sun file:text-ink file:px-3 file:py-1.5 file:text-sm"
               />
               {filer.length > 0 && (
                 <p className="mt-2 text-xs text-muted-foreground">{filer.length} bild(er) valda</p>
@@ -216,21 +217,25 @@ function Offert() {
             </div>
 
             <label className="flex items-start gap-3 text-sm text-muted-foreground">
-              <input type="checkbox" required className="mt-1 accent-foreground" />
+              <input type="checkbox" required className="mt-0.5 size-5 shrink-0 accent-brand" />
               <span>
                 Jag samtycker till att {FORETAG.namn} lagrar mina uppgifter för att kunna besvara
                 min förfrågan. Läs mer i{" "}
-                <Link to="/integritetspolicy" className="underline">
+                <Link to="/integritetspolicy" className="font-bold text-brand underline">
                   integritetspolicyn
                 </Link>
                 .
               </span>
             </label>
 
-            {fel && <p className="text-sm text-destructive">{fel}</p>}
+            {fel && (
+              <p role="alert" className="text-sm font-bold text-destructive">
+                {fel}
+              </p>
+            )}
 
             <div>
-              <button type="submit" disabled={skickar} className="btn-base btn-primary">
+              <button type="submit" disabled={skickar} className="btn-base btn-blue">
                 {skickar ? "Skickar …" : "Skicka förfrågan"}
               </button>
             </div>

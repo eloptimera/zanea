@@ -32,3 +32,18 @@ export type OffertData = {
 export async function skickaOffert(_data: OffertData, _bilder: File[]): Promise<void> {
   await skicka();
 }
+
+export type BokningData = {
+  namn: string;
+  telefon: string;
+  epost: string;
+  tjanst: string;
+  frekvens: string;
+  yta_kvm: number;
+  uppskattat_pris_efter_rut: number;
+  gdpr_samtycke: true;
+};
+
+export async function skickaBokning(_data: BokningData): Promise<void> {
+  await skicka();
+}

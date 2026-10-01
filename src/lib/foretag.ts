@@ -1,19 +1,40 @@
 // Enda källan till företagsuppgifter. Allt på sajten (sidfot, kontakt, integritetspolicy,
-// meta-data) läser härifrån. Uppgifterna kommer från allabolag.se, hantverkskollen.se och
-// hitta.se (verifierade av kunden).
-export const FORETAG = {
-  namn: "ReMAB AB",
-  kortnamn: "ReMAB",
-  undertitel: "Renée måleri AB",
-  ort: "Torslanda",
-  omrade: "Göteborg med omnejd",
-  aktivtSedan: 2006,
-  vd: "Renée Anna Lindau",
-  telefon: "070-555 44 72",
-  telefonLank: "+46705554472",
-  epost: "info@remab.eu",
-  gata: "Långholmen 17",
-  postnummer: "423 38",
-  adress: "Långholmen 17, 423 38 Torslanda",
-  orgnr: "556698-3036",
-} as const;
+// meta-data) läser härifrån.
+//
+// Fält med tomt värde (telefon, e-post, öppettider) visas inte på sajten förrän de fylls i.
+export const FORETAG: {
+  namn: string;
+  kortnamn: string;
+  ort: string;
+  omrade: string;
+  startar: number;
+  anstallda: string;
+  orgnr: string;
+  gata: string;
+  postnummer: string;
+  adress: string;
+  telefon: string;
+  telefonLank: string;
+  epost: string;
+  oppettider: readonly { dagar: string; tid: string }[];
+  personer: readonly string[];
+  /** PLATSHÅLLARE: kr/timme inkl. moms före RUT-avdrag. Används bara i kalkylatorn. Ersätt med Zaneas riktiga pris. */
+  timpris: number;
+} = {
+  namn: "Zanea AB",
+  kortnamn: "Zanea",
+  ort: "Bromma",
+  omrade: "Stockholm & Bromma",
+  startar: 2024,
+  anstallda: "ca 4",
+  orgnr: "559471-7901",
+  gata: "Stenhammarsvägen 2A",
+  postnummer: "168 58",
+  adress: "Stenhammarsvägen 2A, 168 58 Bromma",
+  telefon: "",
+  telefonLank: "",
+  epost: "",
+  oppettider: [],
+  personer: ["Anna Katarzyna Vikström", "Elzbieta Irena Gorecki"],
+  timpris: 520,
+};

@@ -1,110 +1,123 @@
 import { Link } from "@tanstack/react-router";
-import { Phone } from "lucide-react";
-import { useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Logo } from "@/components/Brand";
 import { FORETAG } from "@/lib/foretag";
-import logo from "@/assets/remab-logo.png";
 
-const LANKAR = [
+const VANSTER = [
   { to: "/", label: "Hem" },
+  { to: "/tjanster", label: "Tjänster" },
+  { to: "/rut", label: "RUT-avdrag" },
+] as const;
+
+const HOGER = [
   { to: "/om-oss", label: "Om oss" },
-  { to: "/rot", label: "ROT-avdrag" },
   { to: "/kontakt", label: "Kontakt" },
 ] as const;
 
-const LANK_KLASS =
-  "text-sm font-bold whitespace-nowrap text-foreground underline decoration-transparent decoration-[0.2em] underline-offset-[0.55em] transition-colors duration-200 hover:decoration-lime";
-const LANK_AKTIV = "decoration-lime";
+const LANK =
+  "rounded-full px-4 py-2.5 text-sm font-bold whitespace-nowrap text-ink transition-colors duration-200 hover:bg-tint";
+const LANK_AKTIV = "bg-brand text-white hover:bg-brand";
+
+function Lank({ to, label, onClick }: { to: string; label: string; onClick?: () => void }) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      activeOptions={{ exact: to === "/" }}
+      className={LANK}
+      activeProps={{ className: `${LANK} ${LANK_AKTIV}`, "aria-current": "page" }}
+    >
+      {label}
+    </Link>
+  );
+}
 
 export function Header() {
   const [oppen, setOppen] = useState(false);
 
-  return (
-    <header className="sticky top-4 z-50 px-4">
-      <div className="relative mx-auto max-w-6xl">
-        <div className="flex h-16 items-center justify-between gap-6 rounded-full bg-white px-4 shadow-lg shadow-black/15 sm:px-6">
-          <Link to="/" aria-label={`${FORETAG.namn} – startsida`} onClick={() => setOppen(false)}>
-            <img
-              src={logo}
-              alt={`${FORETAG.namn} – ${FORETAG.undertitel}`}
-              width={766}
-              height={261}
-              className="h-11 w-auto"
-            />
-          </Link>
+  useEffect(() => {
+    if (!oppen) return;
+    const stang = (e: KeyboardEvent) => e.key === "Escape" && setOppen(false);
+    window.addEventListener("keydown", stang);
+    return () => window.removeEventListener("keydown", stang);
+  }, [oppen]);
 
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Huvudmeny">
-            {LANKAR.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                activeOptions={{ exact: l.to === "/" }}
-                className={LANK_KLASS}
-                activeProps={{ className: `${LANK_KLASS} ${LANK_AKTIV}` }}
-              >
-                {l.label}
-              </Link>
+  return (
+    <header className="sticky top-6 z-50 -mb-0 h-16 px-6 sm:px-10">
+      <a
+        href="#innehall"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-6 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:font-bold focus:text-ink"
+      >
+        Hoppa till innehållet
+      </a>
+      <div className="relative mx-auto max-w-6xl">
+        <div className="grid h-16 grid-cols-[auto_1fr_auto] items-center rounded-full bg-white px-3 shadow-xl shadow-brand-deep/25 md:grid-cols-[1fr_auto_1fr] md:px-4">
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Huvudmeny">
+            {VANSTER.map((l) => (
+              <Lank key={l.to} {...l} />
             ))}
           </nav>
 
-          <div className="hidden items-center gap-4 md:flex">
-            <a
-              href={`tel:${FORETAG.telefonLank}`}
-              aria-label={`Ring ${FORETAG.telefon}`}
-              className="flex items-center gap-2 text-sm font-bold whitespace-nowrap"
-            >
-              <Phone className="size-4" aria-hidden="true" />
-              <span className="hidden xl:inline">{FORETAG.telefon}</span>
-            </a>
-            <Link to="/offert" className="btn-base btn-lime px-5 py-2.5 text-sm">
-              Begär offert
+          <Link
+            to="/"
+            aria-label={`${FORETAG.namn} – startsida`}
+            className="px-3 md:justify-self-center"
+          >
+            <Logo />
+          </Link>
+
+          <div className="hidden items-center justify-end gap-1 md:flex">
+            {HOGER.map((l) => (
+              <Lank key={l.to} {...l} />
+            ))}
+            <Link to="/offert" className="btn-base btn-navy ml-1 min-h-11 py-2 pr-2 pl-5 text-sm">
+              Få fri offert
+              <span className="grid size-8 place-items-center rounded-full bg-white text-ink">
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </span>
             </Link>
           </div>
 
-          <div className="flex items-center gap-4 md:hidden">
-            <a href={`tel:${FORETAG.telefonLank}`} aria-label={`Ring ${FORETAG.telefon}`}>
-              <Phone className="size-5" aria-hidden="true" />
-            </a>
-            <button
-              type="button"
-              aria-label={oppen ? "Stäng meny" : "Öppna meny"}
-              aria-expanded={oppen}
-              onClick={() => setOppen((o) => !o)}
-              className="p-1"
-            >
-              <svg width="26" height="16" viewBox="0 0 26 16" aria-hidden="true">
-                <path
-                  d={oppen ? "M3 2l20 12M3 14L23 2" : "M0 1h26M0 8h26M0 15h26"}
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                />
-              </svg>
-            </button>
-          </div>
+          <button
+            type="button"
+            aria-label={oppen ? "Stäng meny" : "Öppna meny"}
+            aria-expanded={oppen}
+            aria-controls="mobilmeny"
+            onClick={() => setOppen((o) => !o)}
+            className="col-start-3 grid size-12 place-items-center rounded-full bg-tint text-ink md:hidden"
+          >
+            {oppen ? (
+              <X className="size-5" aria-hidden="true" />
+            ) : (
+              <Menu className="size-5" aria-hidden="true" />
+            )}
+          </button>
         </div>
 
         {oppen && (
           <nav
-            className="absolute inset-x-0 top-full mt-2 flex flex-col rounded-3xl bg-white px-6 py-4 shadow-lg shadow-black/15 md:hidden"
+            id="mobilmeny"
             aria-label="Mobilmeny"
+            className="absolute inset-x-0 top-full mt-2 flex flex-col gap-1 rounded-[2rem] bg-white p-3 shadow-xl shadow-brand-deep/25 md:hidden"
           >
-            {LANKAR.map((l) => (
+            {[...VANSTER, ...HOGER].map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOppen(false)}
-                className={`py-3 ${LANK_KLASS}`}
-                activeProps={{ className: `py-3 ${LANK_KLASS} ${LANK_AKTIV}` }}
                 activeOptions={{ exact: l.to === "/" }}
+                className={`${LANK} py-3.5 text-base`}
+                activeProps={{
+                  className: `${LANK} ${LANK_AKTIV} py-3.5 text-base`,
+                  "aria-current": "page",
+                }}
               >
                 {l.label}
               </Link>
             ))}
-            <Link
-              to="/offert"
-              onClick={() => setOppen(false)}
-              className="btn-base btn-lime mt-3 text-sm"
-            >
-              Begär offert
+            <Link to="/offert" onClick={() => setOppen(false)} className="btn-base btn-navy mt-1">
+              Få fri offert
             </Link>
           </nav>
         )}
