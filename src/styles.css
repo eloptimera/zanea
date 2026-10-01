@@ -1,0 +1,243 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "@fontsource/bagel-fat-one/latin-400.css";
+@import "@fontsource-variable/dm-sans/wght.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Designsystem – ReMAB AB
+ * Svart och ljusgrönt hämtat från loggan. Grönt (#a4c43c) används som ytfärg och
+ * understrykning med svart text ovanpå – aldrig som textfärg på vitt (för låg kontrast).
+ * Rubriker: Bagel Fat One (fet, rundad). Brödtext: DM Sans.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --font-display: "Bagel Fat One", "DM Sans Variable", system-ui, sans-serif;
+  --font-sans: "DM Sans Variable", system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sand: var(--sand);
+  --color-tint: var(--tint);
+  --color-line: var(--line);
+  --color-lime: var(--lime);
+}
+
+:root {
+  --radius: 1.5rem;
+  --lime: #a4c43c;
+  --background: oklch(0.985 0.004 110);
+  --foreground: oklch(0.18 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0 0);
+  --primary: oklch(0.18 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.955 0.01 115);
+  --secondary-foreground: oklch(0.18 0 0);
+  --muted: oklch(0.955 0.01 115);
+  --muted-foreground: oklch(0.42 0 0);
+  --accent: var(--lime);
+  --accent-foreground: oklch(0.18 0 0);
+  --destructive: oklch(0.5 0.2 27);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.88 0.005 110);
+  --input: oklch(0.88 0.005 110);
+  --ring: oklch(0.18 0 0);
+  --sand: oklch(0.955 0.03 122);
+  --tint: oklch(0.955 0.03 122);
+  --line: oklch(0.86 0.005 110);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-foreground);
+    outline-offset: 3px;
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 78rem;
+  padding-inline: 1.5rem;
+}
+
+@utility eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+/* Understrykning i ljusgrönt – en riktig text-underline, så texten ligger orörd ovanpå. */
+@utility ul-lime {
+  text-decoration-line: underline;
+  text-decoration-color: var(--lime);
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.14em;
+  text-decoration-skip-ink: none;
+}
+
+@utility btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.95rem 1.8rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease,
+    transform 250ms ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@utility btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  &:hover {
+    background-color: var(--lime);
+    color: var(--color-foreground);
+  }
+}
+
+@utility btn-lime {
+  background-color: var(--lime);
+  color: var(--color-foreground);
+  &:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+}
+
+@utility btn-outline {
+  border: 2px solid var(--color-foreground);
+  color: var(--color-foreground);
+  &:hover {
+    background-color: var(--lime);
+    border-color: var(--lime);
+  }
+}
+
+@utility field {
+  width: 100%;
+  background-color: var(--color-card);
+  border: 2px solid var(--color-line);
+  border-radius: 1rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  color: var(--color-foreground);
+  transition: border-color 200ms ease;
+  &:focus {
+    outline: none;
+    border-color: var(--color-foreground);
+  }
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Ljusgrön yta som tonas mjukt in och ut mot vitt (inga hårda kanter). */
+@utility bg-fade-tint {
+  background-image: linear-gradient(
+    to bottom,
+    var(--background),
+    var(--tint) 22%,
+    var(--tint) 78%,
+    var(--background)
+  );
+}
+
+/* Rullande textband */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+}
